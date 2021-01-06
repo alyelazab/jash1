@@ -9,36 +9,28 @@ class Image extends React.Component {
             imageUrl: []
         }
     }
-    UNSAFE_componentWillMount() {
 
-        let theArray = this.state.imageUrl
-        axios.get('http://localhost:8080/image/getAllImagePaths', console.log("sending the get all request"))
+    componentWillMount() {
+        axios.get('http://localhost:8080/image/getAllImagePaths')
             .then(res=>{
-             console.log(res)
-             theArray.push(res)
-        })
+                this.setState({imageUrl: [...res.data]})
+            })
             .catch(function(error){
             console.log(error)
         })
-        theArray.map((image)=>{
-            return (
-            this.state.imageUrl.push(image))
-        })
+
 
     }
 
     render() {
 
-
-        console.log('the image array',this.state.imageUrl)
         let theArray = this.state.imageUrl
         const images = theArray.map((image, index)=> {
-            console.log('Every images url',{image})
             return (
                 <img className='singleImage' src={image} alt="some words" key= {index}/>)
 
         })
-        console.log('After storing image source and index')
+
 
 
         return (
